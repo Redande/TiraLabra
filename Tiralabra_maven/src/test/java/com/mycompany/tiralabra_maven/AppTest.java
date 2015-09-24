@@ -36,8 +36,6 @@ public class AppTest {
     
     @Before
     public void setUp() {
-        this.mekaniikat = new Pelimekaniikat();
-        this.tekoaly = new Tekoaly();
     }
     
     @After
