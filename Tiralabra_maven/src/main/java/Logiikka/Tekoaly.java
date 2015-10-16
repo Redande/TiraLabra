@@ -87,35 +87,40 @@ public class Tekoaly {
                 return 0;
             }
         } else {
-            return arpoja();
+            return randomValinta();
         }
     }
     
+    /**
+     * Täysin satunnainen valinta
+     * @return 
+     */
+    public int randomValinta() {
+        return arpoja();
+    }
     
+    public int aloitusValinta(String sukupuoli) {
+        if (sukupuoli.equals("mies")) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     
-    
-    
-    
-//    public static void tekoalyVoittaa() {
-//        Scanner lukija = new Scanner(System.in);
-//        alkuhopinat();
-//        while (true) {
-//            System.out.print("\nValitse: ");
-//            String pelattu = lukija.nextLine();
-//            String tekoaly = "";
-//            if (pelattu.equals("lopeta")) {
-//                break;
-//            } else if (pelattu.equals("kivi")) {
-//                tekoaly = "paperin";
-//            } else if (pelattu.equals("paperi")) {
-//                tekoaly = "sakset";
-//            } else if (pelattu.equals("sakset")) {
-//                tekoaly = "kiven";
+    public int viisasValinta(int edellinen, String sukupuoli) {
+        if (edellinen == -1) {
+            return aloitusValinta(sukupuoli);
+        }
+//        if (kaksiPutkeen) {
+//            if (edellinen == 0) {
+//                return 2;
+//            } else if (edellinen == 1) {
+//                return 0;
 //            } else {
-//                System.out.println("virheellinen syöttö");
+//                return 1;
 //            }
-//            System.out.println("Tekoäly valitsi " + tekoaly + ".");
-//            System.out.println("Hävisit tämän kierroksen, yritä uudestaan.");
+//        } else {
+            return parasValinta(edellinen);
 //        }
-//    }
+    }
 }
