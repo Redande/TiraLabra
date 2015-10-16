@@ -16,7 +16,7 @@ public class Peli {
     int edellinen;
     boolean kaksiPutkeen;
     Scanner lukija;
-    String sukupuoli;
+    boolean pelaajaVoitti;
 
     public Peli(Scanner lukija) {
         this.tekoaly = new Tekoaly();
@@ -29,7 +29,7 @@ public class Peli {
         tasapelit = 0;
         edellinen = -1;
         kaksiPutkeen = false;
-        sukupuoli = "";
+        pelaajaVoitti = false;
     }
 
     /**
@@ -48,7 +48,7 @@ public class Peli {
 
             int pelaajanValinta = mekaniikat.muunnaLuvuksi(syote);
 
-            int tekoalynValinta = tekoaly.viisasValinta(edellinen, sukupuoli);
+            int tekoalynValinta = tekoaly.viisasValinta(edellinen);
 
             //Tarkistetaan, että syöte on kelvollinen.
             if (!syotteenTarkistus(syote)) {
@@ -78,6 +78,12 @@ public class Peli {
             edellinen = pelaajanValinta;
 
             kerroVoittaja(voittaja);
+            
+            if (voittaja == 1) {
+                pelaajaVoitti = true;
+            } else {
+                pelaajaVoitti = false;
+            }
         }
     }
 
@@ -96,8 +102,6 @@ public class Peli {
      */
     public void alkuhopinat() {
         System.out.println("Tervetuloa testaamaan kivi-paperi-sakset tekoälyä!");
-        System.out.print("Oletko mies vai nainen?: ");
-        sukupuoli = lukija.nextLine();
         System.out.println("Vaihtoehtosi ovat kivi, paperi ja sakset. \nVoit myös kirjoittaa \"lopeta\" jos haluat lopettaa pelaamisen.");
     }
 

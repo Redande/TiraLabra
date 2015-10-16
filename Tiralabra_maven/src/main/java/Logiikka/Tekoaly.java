@@ -99,17 +99,13 @@ public class Tekoaly {
         return arpoja();
     }
     
-    public int aloitusValinta(String sukupuoli) {
-        if (sukupuoli.equals("mies")) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public int aloitusValinta() {
+        return 1;
     }
     
-    public int viisasValinta(int edellinen, String sukupuoli) {
+    public int viisasValinta(int edellinen) {
         if (edellinen == -1) {
-            return aloitusValinta(sukupuoli);
+            return aloitusValinta();
         }
 //        if (kaksiPutkeen) {
 //            if (edellinen == 0) {
@@ -122,5 +118,15 @@ public class Tekoaly {
 //        } else {
             return parasValinta(edellinen);
 //        }
+    }
+    
+    public int haviajanValinta(int edellinen, boolean voittiko) {
+        if (edellinen == 0) {
+            return 2;
+        } else if (edellinen == 1) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }
