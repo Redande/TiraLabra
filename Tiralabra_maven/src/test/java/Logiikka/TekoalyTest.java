@@ -86,6 +86,6 @@ public class TekoalyTest {
         tko.lisaaPelattu(0, 1);
         tko.lisaaPelattu(0, 1);
         tko.lisaaPelattu(0, 1);
-        assertEquals(tko.parasValinta(0), 2);
+        assertEquals(tko.taulukkoValinta(0), 2);
     }
 }

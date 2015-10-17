@@ -10,13 +10,16 @@ public class Peli {
 
     Tekoaly tekoaly;
     Pelimekaniikat mekaniikat;
+    
+    Scanner lukija;
+    
     int voitot;
     int haviot;
     int tasapelit;
     int edellinen;
     boolean kaksiPutkeen;
-    Scanner lukija;
     boolean pelaajaVoitti;
+    boolean toistaaSamaaValintaa;
 
     public Peli(Scanner lukija) {
         this.tekoaly = new Tekoaly();
@@ -30,6 +33,7 @@ public class Peli {
         edellinen = -1;
         kaksiPutkeen = false;
         pelaajaVoitti = false;
+        toistaaSamaaValintaa = false;
     }
 
     /**
@@ -38,9 +42,16 @@ public class Peli {
     public void kaynnista() {
         alkuhopinat();
 
+        int kierros = 1;
         while (true) {
             System.out.print("\nValitse: ");
             String syote = lukija.nextLine();
+            
+            //Tarkistetaan, että syöte on kelvollinen.
+            if (!syotteenTarkistus(syote)) {
+                System.out.println("Virheellinen valinta");
+                continue;
+            }
 
             if (syote.equals("lopeta")) {
                 break;
@@ -48,12 +59,19 @@ public class Peli {
 
             int pelaajanValinta = mekaniikat.muunnaLuvuksi(syote);
 
-            int tekoalynValinta = tekoaly.viisasValinta(edellinen);
-
-            //Tarkistetaan, että syöte on kelvollinen.
-            if (!syotteenTarkistus(syote)) {
-                System.out.println("Virheellinen valinta");
-                continue;
+            //Määritellään tekoälyn valinta. Koska ihmiset etsivät vastustajansa liikkeistä tiettyjä kuvioita, 
+            //jos käytettäisiin pelkästään taulukkovalintaa tai alitajuntavalintaa, ihminen oppisi tiettyjä voittoliikkeitä.
+            //Vaihtamalla valintaperustetta tietyin välein saamme hämättyä ihmistä.
+            
+            int tekoalynValinta;
+            if (toistaaSamaaValintaa) {
+                tekoalynValinta = tekoaly.toistaaSamaa(edellinen);
+            } else if (kierros % 7 == 0) {
+                tekoalynValinta = tekoaly.randomValinta();
+            } else if (kierros % 2 == 0) {
+                tekoalynValinta = tekoaly.taulukkoValinta(edellinen);
+            } else {
+                tekoalynValinta = tekoaly.alitajuntaValinta(edellinen, kaksiPutkeen, pelaajaVoitti);
             }
 
             //Määritellään voittaja
@@ -65,14 +83,14 @@ public class Peli {
             //Lisätään tekoälyn tilastoihin edellisen jälkeinen valinta
             if (edellinen != -1) {
                 tekoaly.lisaaPelattu(edellinen, pelaajanValinta);
-//                if (edellinen == pelaajanValinta) {
-//                    if (kaksiPutkeen) {
-//                        kaksiPutkeen = false;
-//                    }
-//                    kaksiPutkeen = true;
-//                } else {
-//                    kaksiPutkeen = false;
-//                }
+                if (edellinen == pelaajanValinta) {
+                    if (kaksiPutkeen) {
+                        toistaaSamaaValintaa = true;
+                    }
+                    kaksiPutkeen = true;
+                } else {
+                    kaksiPutkeen = false;
+                }
             }
 
             edellinen = pelaajanValinta;
@@ -84,6 +102,8 @@ public class Peli {
             } else {
                 pelaajaVoitti = false;
             }
+            
+            kierros++;
         }
     }
 

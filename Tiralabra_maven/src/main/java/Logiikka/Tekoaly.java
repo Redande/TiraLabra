@@ -63,7 +63,7 @@ public class Tekoaly {
      * @param edellinen
      * @return 
      */
-    public int parasValinta(int edellinen) {
+    public int taulukkoValinta(int edellinen) {
         //selvitetään mitä on pelattu eniten edellisen jälkeen
         int paras = 0;
         int parhaanIndeksi = -1;
@@ -99,27 +99,51 @@ public class Tekoaly {
         return arpoja();
     }
     
+    /**
+     * Tilastollisesti ihminen yleensä valitsee ensimmäisenä kiven, joten 
+     * tekoäly aloittaa paperilla saadakseen voiton.
+     * @return 
+     */
     public int aloitusValinta() {
         return 1;
     }
     
-    public int viisasValinta(int edellinen) {
+    /**
+     * Alitajuntaisesti ihmiset eivät pelaa yli kahta kertaa putkeen samaa merkkiä.
+     * Lisäksi ihmiset hävitessään alitajuntaisesti vaihtavat valintansa helpommin
+     * siihen, mille valinnalle he hävisivät edellisen kierroksen.
+     * Tämä metodi käyttää näitä hyväkseen, ja valitsee niiden perusteella omansa. 
+     * @param edellinen
+     * @param kaksiPutkeen
+     * @param voittiko
+     * @return 
+     */
+    public int alitajuntaValinta(int edellinen, boolean kaksiPutkeen, boolean voittiko) {
         if (edellinen == -1) {
             return aloitusValinta();
         }
-//        if (kaksiPutkeen) {
-//            if (edellinen == 0) {
-//                return 2;
-//            } else if (edellinen == 1) {
-//                return 0;
-//            } else {
-//                return 1;
-//            }
-//        } else {
-            return parasValinta(edellinen);
-//        }
+        if (kaksiPutkeen) {
+            if (edellinen == 0) {
+                return 2;
+            } else if (edellinen == 1) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            return haviajanValinta(edellinen, voittiko);
+        }
     }
     
+    /** apumetodi alitajuntaValinnalle, joka määrittelelee valinnan ihmisen häviämän perusteella.
+     * Koska tilastollisesti ihmiset hävitessään mieluummin vaihtavat alitajuntaisesti siihen, mille he juuri
+     * hävisivät, käytämme tätä hyväksi.
+     * Siis jos ihminen esim. hävisi kivelle, hän luultavammin vaihtaa kiveen jos hän aikoo vaihtaa.
+     * 
+     * @param edellinen
+     * @param voittiko
+     * @return 
+     */
     public int haviajanValinta(int edellinen, boolean voittiko) {
         if (edellinen == 0) {
             return 2;
@@ -127,6 +151,21 @@ public class Tekoaly {
             return 0;
         } else {
             return 1;
+        }
+    }
+    
+    /**
+     * Metodi, jota käytetään jos ihminen toistaa samaa valintaa yli kaksi kertaa.
+     * @param edellinen
+     * @return 
+     */
+    public int toistaaSamaa(int edellinen) {
+        if (edellinen == 0) {
+            return 1;
+        } else if (edellinen == 1) {
+            return 2;
+        } else {
+            return 0;
         }
     }
 }
