@@ -130,8 +130,10 @@ public class Tekoaly {
             } else {
                 return 1;
             }
+        } else if (!voittiko) {
+            return haviajanValinta(edellinen);
         } else {
-            return haviajanValinta(edellinen, voittiko);
+            return taulukkoValinta(edellinen);
         }
     }
     
@@ -144,7 +146,7 @@ public class Tekoaly {
      * @param voittiko
      * @return 
      */
-    public int haviajanValinta(int edellinen, boolean voittiko) {
+    public int haviajanValinta(int edellinen) {
         if (edellinen == 0) {
             return 2;
         } else if (edellinen == 1) {
