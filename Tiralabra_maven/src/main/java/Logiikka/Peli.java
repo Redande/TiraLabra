@@ -46,15 +46,15 @@ public class Peli {
         while (true) {
             System.out.print("\nValitse: ");
             String syote = lukija.nextLine();
+
+            if (syote.equals("lopeta")) {
+                break;
+            }
             
             //Tarkistetaan, että syöte on kelvollinen.
             if (!syotteenTarkistus(syote)) {
                 System.out.println("Virheellinen valinta");
                 continue;
-            }
-
-            if (syote.equals("lopeta")) {
-                break;
             }
 
             int pelaajanValinta = mekaniikat.muunnaLuvuksi(syote);
@@ -66,7 +66,7 @@ public class Peli {
             int tekoalynValinta;
             if (toistaaSamaaValintaa) {
                 tekoalynValinta = tekoaly.toistaaSamaa(edellinen);
-            } else if (kierros % 7 == 0) {
+            } else if (kierros % 5 == 0) {
                 tekoalynValinta = tekoaly.randomValinta();
             } else if (kierros % 2 == 0) {
                 tekoalynValinta = tekoaly.taulukkoValinta(edellinen);
