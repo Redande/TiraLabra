@@ -66,7 +66,7 @@ public class Peli {
             int tekoalynValinta;
             if (toistaaSamaaValintaa) {
                 tekoalynValinta = tekoaly.toistaaSamaa(edellinen);
-            } else if (kierros % 5 == 0) {
+            } else if (kierros % 3 == 0) {
                 tekoalynValinta = tekoaly.randomValinta();
             } else if (kierros % 2 == 0) {
                 tekoalynValinta = tekoaly.taulukkoValinta(edellinen);
@@ -90,6 +90,7 @@ public class Peli {
                     kaksiPutkeen = true;
                 } else {
                     kaksiPutkeen = false;
+                    toistaaSamaaValintaa = false;
                 }
             }
 
@@ -97,7 +98,8 @@ public class Peli {
 
             kerroVoittaja(voittaja);
             
-            if (voittaja == 1) {
+            
+            if (voittaja == 1 || voittaja == 0) {
                 pelaajaVoitti = true;
             } else {
                 pelaajaVoitti = false;

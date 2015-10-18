@@ -130,7 +130,7 @@ public class Tekoaly {
             } else {
                 return 1;
             }
-        } else if (!voittiko) {
+        } else if (voittiko == false) {
             return haviajanValinta(edellinen);
         } else {
             return taulukkoValinta(edellinen);
@@ -143,7 +143,6 @@ public class Tekoaly {
      * Siis jos ihminen esim. hävisi kivelle, hän luultavammin vaihtaa kiveen jos hän aikoo vaihtaa.
      * 
      * @param edellinen
-     * @param voittiko
      * @return 
      */
     public int haviajanValinta(int edellinen) {
